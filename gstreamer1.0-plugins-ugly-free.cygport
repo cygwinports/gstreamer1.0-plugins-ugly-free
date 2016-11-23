@@ -1,0 +1,33 @@
+GST_PLUGINS_ENABLE="cdio dvdread mad"
+# libsidplay is permissible but obsolete
+GST_PLUGINS_DISABLE="a52dec amrnb amrwb lame mpeg2dec sidplay twolame x264"
+inherit gst-plugins
+
+NAME="gstreamer1.0-plugins-ugly-free"
+VERSION=1.6.4
+RELEASE=1
+CATEGORY="Audio Video"
+SUMMARY="GStreamer 1.0 Ugly plugins"
+DESCRIPTION="GStreamer Ugly Plug-ins is a set of plug-ins that have good
+quality and correct functionality, but distributing them might pose problems.
+The license on either the plug-ins or the supporting libraries might not be
+how we'd like. The code might be widely known to present patent problems in
+some jurisdictions."
+#md5sum=a278efbaea8a9caa9719a5315c18653b
+#SRC_URI="http://pkgs.fedoraproject.org/repo/pkgs/${NAME/.0/}/${ORIG_PN}-${VERSION}.tar.xz/${md5sum}/${ORIG_PN}-${VERSION}.tar.xz"
+SRC_URI="${ORIG_PN}-${VERSION}.tar.xz"
+SRC_DIR="gst-plugins-ugly-${VERSION}"
+
+PKG_NAMES="${NAME} ${NAME%-free}-doc"
+
+for ext in ${GST_PLUGINS_ENABLE}
+do
+	gstreamer1_0_plugins_ugly_free_OBSOLETES+=" ${NAME%-ugly}-${ext}"
+done
+unset ext
+
+gstreamer1_0_plugins_ugly_free_CONTENTS=" --exclude=gtk-doc usr/"
+gstreamer1_0_plugins_ugly_doc_CATEGORY="Doc"
+gstreamer1_0_plugins_ugly_doc_CONTENTS="usr/share/gtk-doc/"
+
+KEEP_LA_FILES="none"
