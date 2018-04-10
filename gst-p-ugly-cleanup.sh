@@ -93,6 +93,9 @@ for subdir in gst ext; do
 	done
 done
 
+echo "Fixing up AC_CONFIG_SRCDIR"
+sed -e '/AC_CONFIG_SRCDIR/s/asfdemux/xingmux/g' configure.ac > configure.ac.new && mv configure.ac.new configure.ac
+
 echo "Fixing up docs/plugins/Makefile.am"
 sed -e ':a;N;$!ba;s| *\\\n\n|\n\n|g' docs/plugins/Makefile.am > docs/plugins/Makefile.am.new && mv docs/plugins/Makefile.am.new docs/plugins/Makefile.am
 
